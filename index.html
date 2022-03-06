@@ -55,21 +55,25 @@
 	<button @click="createPost()">+ Create New Post</button>
 	<ul>
 		<li v-for="(post, i) in posts" :key="i">
-			<a @click="selectPost(post)">{{post.label}}</a>
+			<input type="checkbox" :checked="post.checked" @click="checkPost(post)">
+			<a @click="selectPost(post)">{{post.content}}</a>
 			<button @click="deletePost(post)">×</button>
 		</li>
 	</ul>
 
 	<section v-if="post">
-		<label>Label:<input type="text" v-model="post.label"></label>
-		<label>Title:<input type="text" v-model="post.title"></label>
+		<label><input type="checkbox" v-model="post.checked"></label>
 		<label>Content:<textarea v-model="post.content"></textarea></label>
+		<label>Category:<select v-model="post.category">
+			<option value="0">-- No category --</option>
+			<option value="1">Red category</option>
+			<option value="2">Blue category</option>
+		</select></label>
 		<hr>
 		<button @click="savePost()">Save</button>
 		<button @click="cancel()">Cancel</button>
 	</section>
 </main>
-
 
 <footer :hidden="!isReady" hidden>Copyright ©{{thisYear}}</footer>
 </body>

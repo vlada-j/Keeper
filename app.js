@@ -48,16 +48,16 @@ const App = {
 		},
 		createPost() {
 			this.post = {
-				label: '',
-				title: '',
-				content: ''
+				content: "",
+				checked: false,
+				category: 0,
 			};
 		},
 		savePost() {
 			const post = {
-				label: this.post.label,
-				title: this.post.title,
 				content: this.post.content,
+				checked: this.post.checked,
+				category: this.post.category,
 			};
 			let promise;
 
@@ -77,9 +77,9 @@ const App = {
 				.then(p => {
 					this.post = {
 						id: post.id,
-						label: p.label,
-						title: p.title,
 						content: p.content,
+						checked: p.checked,
+						category: p.category,
 					}
 				});
 		},
@@ -87,6 +87,9 @@ const App = {
 			service.removeNews(post.id)
 				.then(() => this.refreshPosts())
 				.then(() => this.cancel());
+		},
+		checkPost(post) {
+			console.log(post.id, post.checked);
 		},
 		refreshPosts() {
 			service.getAllNews()

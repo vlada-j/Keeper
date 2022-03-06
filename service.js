@@ -1,16 +1,17 @@
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.7/firebase-app.js';
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.6.7/firebase-auth.js';
-import { getFirestore, collection, getDocs, addDoc, doc, getDoc, deleteDoc, updateDoc } from 'https://www.gstatic.com/firebasejs/9.6.7/firebase-firestore.js';
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.8/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.6.8/firebase-auth.js';
+import { getFirestore, collection, getDocs, addDoc, doc, getDoc, deleteDoc, updateDoc } from 'https://www.gstatic.com/firebasejs/9.6.8/firebase-firestore.js';
 import EventDispatcher from "./EventDispatcher.js"
 
-
+const COLLECTION_NAME = "keeper-notes"
 const CONFIG = {
-	apiKey: "AIzaSyBKMQz3D-8QJgrg97mBVFSQvJg2Qz9sfVM",
-	authDomain: "basic-c2571.firebaseapp.com",
-	databaseURL: "https://basic-c2571.firebaseio.com",
-	projectId: "basic-c2571",
-	storageBucket: "basic-c2571.appspot.com",
-	messagingSenderId: "108161882979"
+	apiKey: "AIzaSyCj9-LVU0ssDj0J0CSVE11GQeGcUhKOKhY",
+	authDomain: "vj-lab.firebaseapp.com",
+	databaseURL: "https://vj-lab.firebaseio.com",
+	projectId: "vj-lab",
+	storageBucket: "vj-lab.appspot.com",
+	messagingSenderId: "493814968976",
+	appId: "1:493814968976:web:09431f3a8cde9fee995e15"
 };
 
 class Service extends EventDispatcher {
@@ -49,7 +50,7 @@ class Service extends EventDispatcher {
 	}
 
 	async getAllNews() {
-		const newsCol = collection(this.db, 'news');
+		const newsCol = collection(this.db, COLLECTION_NAME);
 		const newsSnapshot = await getDocs(newsCol);
 		return newsSnapshot.docs
 			.map(doc => {
@@ -60,7 +61,7 @@ class Service extends EventDispatcher {
 	}
 
 	async getNews(id) {
-		const docRef = doc(this.db, 'news', id);
+		const docRef = doc(this.db, COLLECTION_NAME, id);
 		const docSnap = await getDoc(docRef);
 
 		if (docSnap.exists()) {
@@ -72,7 +73,7 @@ class Service extends EventDispatcher {
 
 	async addNews(data) {
 		try {
-			const docRef = await addDoc(collection(this.db, "news"), data);
+			const docRef = await addDoc(collection(this.db, COLLECTION_NAME), data);
 			console.log("Document written with ID: ", docRef.id);
 			return docRef
 		} catch (e) {
@@ -83,12 +84,12 @@ class Service extends EventDispatcher {
 
 	async editNews(id, data) {
 
-		const docRef = doc(this.db, 'news', id);
+		const docRef = doc(this.db, COLLECTION_NAME, id);
 		return await updateDoc( docRef, data );
 	}
 
 	async removeNews(id) {
-		return await deleteDoc( doc(this.db, 'news', id) );
+		return await deleteDoc( doc(this.db, COLLECTION_NAME, id) );
 	}
 }
 
