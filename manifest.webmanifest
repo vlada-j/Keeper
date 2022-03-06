@@ -1,0 +1,19 @@
+{
+  "name": "Keeper",
+  "short_name": "Keeper",
+  "description": "Personal notes keeper for sharing between devices",
+  "lang": "en-GB",
+  "theme_color": "#D72814",
+  "background_color": "#505076",
+  "display": "standalone",
+  "orientation": "portrait",
+  "start_url": "/index.html",
+  "icons": [
+    {
+      "src": "/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

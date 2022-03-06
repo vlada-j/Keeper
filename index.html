@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>:: Keeper ::</title>
+	<meta name="description" content="Personal notes keeper for sharing between devices">
+	<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+	<link rel="manifest" href="manifest.webmanifest">
+
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="msapplication-starturl" content="/">
+
+	<meta property="og:title" content="Keeper">
+	<meta property="og:type" content="">
+	<meta property="og:url" content="/">
+	<meta property="og:image" content="">
+
+	<meta name="theme-color" content="#D72814">
+	<!-- possible content values: default, black or black-translucent -->
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+	<meta name="apple-mobile-web-app-capable" content="no">
+	<link rel="apple-touch-icon" href="/icon-192x192.png">
+
+	<!-- SCRIPTS -->
+	<script src="vue.global.prod.js" defer></script>
+	<script src="main.js" type="module"></script>
+</head>
+<body id="app">
+
+<div :hidden="isReady">Loader...</div>
+
+
+<section :hidden="!bannerVisible" hidden>
+	<button @click="bannerAdd()">Add to home screen</button>
+	<button @click="bannerClose">Close</button>
+</section>
+
+
+<header :hidden="!isReady" hidden>
+	<article v-if="!user">
+		<input type="text" name="username" v-model="loginForm.username">
+		<input type="password" name="password" v-model="loginForm.password">
+		<button @click="login()">Login</button>
+	</article>
+	<article v-else>
+		<p :title="user.uid">{{user.email}}</p>
+		<button @click="logout()">Logout</button>
+	</article>
+</header>
+
+
+<main :hidden="!isReady" hidden>
+	<button @click="createPost()">+ Create New Post</button>
+	<ul>
+		<li v-for="(post, i) in posts" :key="i">
+			<a @click="selectPost(post)">{{post.label}}</a>
+			<button @click="deletePost(post)">×</button>
+		</li>
+	</ul>
+
+	<section v-if="post">
+		<label>Label:<input type="text" v-model="post.label"></label>
+		<label>Title:<input type="text" v-model="post.title"></label>
+		<label>Content:<textarea v-model="post.content"></textarea></label>
+		<hr>
+		<button @click="savePost()">Save</button>
+		<button @click="cancel()">Cancel</button>
+	</section>
+</main>
+
+
+<footer :hidden="!isReady" hidden>Copyright ©{{thisYear}}</footer>
+</body>
+</html>
